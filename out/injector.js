@@ -1,22 +1,18 @@
 var Injector = (function () {
-    function Injector(bindings) {
-        this.bindings = {};
-        if (!bindings) {
-            bindings = {};
-        }
-        this.bindings = bindings;
+    function Injector() {
     }
     Injector.prototype.hasBinding = function (intrface) {
-        return this.bindings.hasOwnProperty(intrface);
+        return Injector.bindings.hasOwnProperty(intrface);
     };
     Injector.prototype.bind = function (intrface, implementation) {
-        this.bindings[intrface] = implementation;
+        Injector.bindings[intrface] = implementation;
     };
     Injector.prototype.get = function (intrface) {
         if (!this.hasBinding(intrface))
             throw new Error("Interface Binding Not Set");
-        return (require(this.bindings[intrface]));
+        return (require(Injector.bindings[intrface]));
     };
+    Injector.bindings = {};
     return Injector;
 }());
 module.exports = Injector;

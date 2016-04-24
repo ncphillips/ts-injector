@@ -1,27 +1,18 @@
-class Injector {
-  private bindings: {[key:string]:string} = {};
-
-  constructor(bindings?:{[key:string]:string}) {
-    if (!bindings) {
-      bindings = {};
-    }
-
-    this.bindings = bindings;
-  }
-
+class Injector{
+  private static bindings: {[key:string]:string} = {};
   public hasBinding(intrface: string): Boolean {
-    return this.bindings.hasOwnProperty(intrface);
+    return Injector.bindings.hasOwnProperty(intrface);
   }
 
   public bind(intrface: string, implementation: string): void {
-    this.bindings[intrface] = implementation;
+    Injector.bindings[intrface] = implementation;
   }
 
   public get<T>(intrface: string): T {
     if (!this.hasBinding(intrface))
       throw new Error("Interface Binding Not Set");
 
-    return <T>(require(this.bindings[intrface]));
+    return <T>(require(Injector.bindings[intrface]));
   }
 }
 
