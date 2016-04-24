@@ -5,8 +5,8 @@
   "main": "out/injector.js",
   "private": true,
   "scripts": {
-    "compile": "tsc",
-    "test": "tsc && mocha out/tests"
+    "compile": "rm -rf out && tsc",
+    "test": "rm -rf out && tsc && mocha out/tests"
   },
   "keywords": [
     "dependency",

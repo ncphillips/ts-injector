@@ -1,11 +1,21 @@
 var Injector = (function () {
-    function Injector() {
+    function Injector(bindings) {
+        this.bindings = {};
+        if (!bindings) {
+            bindings = {};
+        }
+        this.bindings = bindings;
     }
-    Injector.prototype.getInstance = function (iname) {
-        return require("fs");
+    Injector.prototype.hasBinding = function (intrface) {
+        return this.bindings.hasOwnProperty(intrface);
     };
-    Injector.prototype.hasBinding = function (iname) {
-        return false;
+    Injector.prototype.bind = function (intrface, implementation) {
+        this.bindings[intrface] = implementation;
+    };
+    Injector.prototype.get = function (intrface) {
+        if (!this.hasBinding(intrface))
+            throw new Error("Interface Binding Not Set");
+        return (require(this.bindings[intrface]));
     };
     return Injector;
 }());
